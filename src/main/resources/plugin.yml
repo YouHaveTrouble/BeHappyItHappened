@@ -1,0 +1,7 @@
+name: BeHappyThatItHappened
+version: '${project.version}'
+main: me.youhavetrouble.behappythatithappened.BeHappyThatItHappened
+api-version: 1.18
+authors: [ YouHaveTrouble ]
+description: Don't be sad that they're gone, be happy they happened
+website: youhavetrouble.me
