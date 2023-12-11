@@ -5,3 +5,13 @@ api-version: 1.18
 authors: [ YouHaveTrouble ]
 description: Don't be sad that they're gone, be happy they happened
 website: youhavetrouble.me
+commands:
+  bhihreload:
+    description: Reloads the plugin
+    usage: /bhihreload
+    permission: bhih.reload
+    permission-message: You do not have permission to use this command
+permissions:
+    bhih.reload:
+        description: Allows the user to reload the plugin
+        default: op

@@ -1,0 +1,5 @@
+named-entity:
+  rename-drops: true
+  drop-nametag: false
+player:
+  drop-nametag: false
