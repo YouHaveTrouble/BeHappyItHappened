@@ -107,10 +107,12 @@ public class SadMomentListener implements Listener {
             lore.add(message
                     .decoration(TextDecoration.ITALIC, false)
                     .color(NamedTextColor.GRAY)
-        );
+            );
             meta.lore(lore);
+        } else {
+            meta.lore(null);
         }
-        nametag.setItemMeta(meta);
+        nametag .setItemMeta(meta);
         return nametag;
     }
 
