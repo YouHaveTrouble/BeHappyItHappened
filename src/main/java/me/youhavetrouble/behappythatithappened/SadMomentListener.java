@@ -1,12 +1,15 @@
 package me.youhavetrouble.behappythatithappened;
 
+import io.papermc.paper.event.entity.TameableDeathMessageEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -38,6 +41,11 @@ public class SadMomentListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onSadMoment(EntityDeathEvent event) {
         if (event.getEntityType().equals(EntityType.PLAYER)) return;
+        if (!(event.getEntity() instanceof Mob)) return;
+        if (event.getEntity() instanceof Tameable) {
+            Tameable pet = (Tameable) event.getEntity();
+            if (pet.isTamed()) return;
+        }
         Component inMemoryOf = event.getEntity().customName();
         if (inMemoryOf == null) return;
 
@@ -53,6 +61,14 @@ public class SadMomentListener implements Listener {
         if (plugin.renamedMobsDropTag) {
             event.getDrops().add(getMemento(inMemoryOf, null));
         }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onSevereLossMoment(TameableDeathMessageEvent event) {
+        if (!plugin.renamedMobsDropTag) return;
+        if (!event.getEntity().isTamed()) return;
+        ItemStack memento = getMemento(event.getEntity().customName(), event.deathMessage());
+        event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), memento);
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
